@@ -53,11 +53,6 @@ let load = (data) => {
       let location = data["location"];
       let latitude = data["latitude"];
       let elevation = data["elevation"];
-
-      // document.getElementById("timezone").innerText = timezone;
-      // document.getElementById("location").innerText = location;
-      // document.getElementById("latitude").innerText = latitude;
-      // document.getElementById("elevation").innerText = elevation;
     })
     .catch(console.error);
 };
@@ -79,41 +74,8 @@ let loadInocar = () => {
     .catch(console.error);
 };
 
-// (function () {
-//   fetch(URL)
-//     .then((response) => response.text())
-//     .then((data) => {
-//       const parser = new DOMParser();
-//       const xml = parser.parseFromString(data, "text/html");
-//       console.log(xml);
-//     })
-//     .catch(console.error);
-// })();
-
-// (function () {
-//   let meteo = localStorage.getItem("meteo");
-//   if (meteo == null) {
-//     let URL =
-//       "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=apparent_temperature&daily=uv_index_max&timezone=auto";
-
-//     fetch(URL)
-//       .then((response) => response.json())
-//       .then((data) => {
-//         load(data);
-
-//         /* GUARDAR DATA EN LA MEMORIA */
-//         localStorage.setItem("meteo", JSON.stringify(data));
-//       })
-//       .catch(console.error);
-//   } else {
-//     /* CARGAR DATA DESDE LA MEMORIA */
-//     load(JSON.parse(meteo));
-//   }
-// })();
-
 (function () {
-  // const timezone = document.getElementById("timezone")
-  // const location = document.getElementById("location")
+
   let URL =
     "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=apparent_temperature&daily=uv_index_max&timezone=auto";
   fetch(URL)
@@ -124,11 +86,6 @@ let loadInocar = () => {
       let location = data["location"];
       let latitude = data["latitude"];
       let elevation = data["elevation"];
-
-      // document.getElementById("timezone").innerText = timezone;
-      // document.getElementById("location").innerText = location;
-      // document.getElementById("latitude").innerText = latitude;
-      // document.getElementById("elevation").innerText = elevation;
 
       plot(data);
       plot2(data);
