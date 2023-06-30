@@ -57,7 +57,7 @@ let load = (data) => {
     .catch(console.error);
 };
 
-let loadInocar = () => {
+let loadInocar = (inocar) => {
   let URL_proxy = 'http://localhost:8080/' // Coloque el URL de acuerdo con la opción de proxy
   let URL = URL_proxy + 'https://www.inocar.mil.ec/mareas/consultan.php';
 
@@ -72,10 +72,12 @@ let loadInocar = () => {
       contenedorHTML.innerHTML = contenedorMareas.innerHTML;
     })
     .catch(console.error);
-};
+}; 
 
 (function () {
-
+  let meteo = localStorage.getItem("meteo");
+  let inocar = localStorage.getItem("inocar");
+  if(meteo==null){
   let URL =
     "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=apparent_temperature&daily=uv_index_max&timezone=auto";
   fetch(URL)
@@ -92,4 +94,10 @@ let loadInocar = () => {
       loadInocar();
     })
     .catch(console.error);
+  }else{
+    /* GUARDAR DATA EN MEMORIA */
+  localStorage.setItem("meteo", JSON.stringify(data))
+  load(JSON.parse(meteo))
+  }
+
 })();
