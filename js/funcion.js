@@ -43,22 +43,22 @@ let plot2 = (data) => {
 };
 
 let load = (data) => {
-  let URL =
-    "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=apparent_temperature&daily=uv_index_max&timezone=auto";
-  fetch(URL)
-    .then((response) => response.json())
-    .then((data) => {
       console.log(data);
       let timezone = data["timezone"];
       let location = data["location"];
       let latitude = data["latitude"];
       let elevation = data["elevation"];
-    })
-    .catch(console.error);
+
+      document.getElementById("timezone").innerText = timezone;
+      document.getElementById("location").innerText = location;
+      document.getElementById("latitude").innerText = latitude;
+      document.getElementById("elevation").innerText = elevation;
+      plot(data); 
+      plot2(data);
 };
 
-let loadInocar = (inocar) => {
-  let URL_proxy = 'http://localhost:8080/' // Coloque el URL de acuerdo con la opción de proxy
+let loadInocar = () => {
+  let URL_proxy = ' https://cors-anywhere.herokuapp.com/' // Coloque el URL de acuerdo con la opción de proxy
   let URL = URL_proxy + 'https://www.inocar.mil.ec/mareas/consultan.php';
 
   fetch(URL)
@@ -76,28 +76,23 @@ let loadInocar = (inocar) => {
 
 (function () {
   let meteo = localStorage.getItem("meteo");
-  let inocar = localStorage.getItem("inocar");
   if(meteo==null){
   let URL =
     "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=apparent_temperature&daily=uv_index_max&timezone=auto";
-  fetch(URL)
+    fetch(URL)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      let timezone = data["timezone"];
-      let location = data["location"];
-      let latitude = data["latitude"];
-      let elevation = data["elevation"];
-
-      plot(data);
-      plot2(data);
+      //  plot(data);
+      //  plot2(data);
       loadInocar();
+      load(data);
+      localStorage.setItem("meteo", JSON.stringify(data));
     })
     .catch(console.error);
   }else{
     /* GUARDAR DATA EN MEMORIA */
-  localStorage.setItem("meteo", JSON.stringify(data))
-  load(JSON.parse(meteo))
+  load(JSON.parse(meteo));
+  loadInocar();
   }
 
 })();
